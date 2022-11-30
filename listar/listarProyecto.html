@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestion de Proyectos{% endblock %}
+
+{% block body %}
+
+<div class = "row">
+    <div class = "col-sm-24 col-md-24 col-lg-24 col-xl-24 ">
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class = "alert alert-dismissible alert-success">
+            <button type = "button" class = "close" data-dismiss = "alert">&times;</button>
+            <strong class = "text-dark"> {{ message }} </strong>
+        </div>
+
+        {% endfor %}
+        {% endif %}
+
+        <h2>Gestion de Proyectos  <a href="{% url 'guardarP'%}"><i class="fa fa-floppy-o" aria-hidden="true"  style = "color: red;"></i></a></h2>
+
+        <div class = "card">            
+    </div>
+    <div class = "col-sm-24 col-md-24 col-lg-24 col-xl-24">
+        <div class = "table-responsive">
+            <table class = "table table-striped">
+                 <thead>
+                        <tr>
+                            <th>#</th>                            
+                            <th>Constructora</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Numero de Baños</th>
+                            <th>Numero de Habitaciones</th>
+                            <th>Banco Vinculado</th>
+                            <th>Porcentaje Cuota Inicial</th>
+                            <th>Ciudad</th>                                                        
+                            <th>Clasificacion</th>
+                            <th>Acabados</th>
+                            <th>Serial</th>
+                            <th>Tipo</th>
+                            <th colspan = "2">Lider</th>
+                        </tr>
+                 </thead>
+                 <tbody>
+                    {% for c in entity %}
+                    <tr>
+                        <td>{{c.id_proyecto}}</td>                        
+                        <td>{{c.constructora}}</td>
+                        <td style="white-space:nowrap">{{c.fecha_inicio | date:"d-m-Y"}}</td>
+                        <td>{{c.numero_banos}}</td>
+                        <td>{{c.numero_habitaciones}}</td>
+                        <td>{{c.banco_vinculado}}</td>
+                        <td>{{c.porcentaje_cuota_inicial}}%</td>
+                        <td>{{c.ciudad}}</td>                        
+                        <td>{{c.clasificacion}}</td>
+                        <td>{{c.acabados}}</td>
+                        <td>{{c.serial}}</td>
+                        <td>{{c.id_tipo.id_tipo}}{% if not c.id_tipo.id_tipo %} <a href = "{% url 'editarP' c.id_proyecto %}">Sin Lider Asignado</a>{% endif %}</td>
+                        <td>{% if not c.id_lider.nombre %}<a href = "{% url 'editarP' c.id_proyecto %}">Sin Lider Asignado</a>{% else %}{{c.id_lider.nombre}} {{c.id_lider.primer_apellido}}{% endif %}</td>
+                        <td><a href="{% url 'editarP' c.id_proyecto %}"><i class="fa fa-pencil-square-o fa-xl" aria-hidden="true"  style = "color: #0DCAF0;"></i></a></td>
+                        <td><a onclick="return confirm('Estás seguro que deseas eliminar el registro?');" href="{% url 'deleteP' c.id_proyecto %}"><i class="fa fa-eraser fa-xl" aria-hidden="true"  style = "color: red;"></i></a></td>
+                    </tr>
+                    {% endfor %}                    
+                 </tbody>
+            </table>
+            <hr>
+        </div>
+        {% include "paginacion.html" %}
+    </div>
+</div>
+
+{% endblock %}

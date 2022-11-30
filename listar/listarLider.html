@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestion de Lider{% endblock %}
+
+{% block body %}
+
+<div class = "row">
+    <div class = "col-sm-24 col-md-24 col-lg-24 col-xl-24 ">
+       
+        <h2>Gestion de Lider  <a href="{% url 'saveL' %}"><i class="fa fa-floppy-o" aria-hidden="true"  style = "color: red;"></i></a></h2>
+
+        <div class = "card">            
+    </div>
+    <div class = "col-sm-24 col-md-24 col-lg-24 col-xl-24">
+        <div class = "table-responsive">
+            <table class = "table table-striped">
+                 <thead>
+                        <tr>
+                            <th>#</th>                            
+                            <th>Nombre</th>
+                            <th>Primer Apellido</th>
+                            <th>Segundo Apellido</th>
+                            <th>Salario</th>
+                            <th>Ciudad Residencia</th>
+                            <th>Cargo</th>                                                     
+                            <th>Clasificacion</th>
+                            <th>Documento</th>
+                            <th colspan = "2">Fecha de Naciminto</th>
+                        </tr>
+                 </thead>
+                 <tbody>
+                    {% for c in entity %}
+                    <tr>
+                        <td>{{c.id_lider}}</td>                        
+                        <td>{{c.nombre}}</td>
+                        <td>{{c.primer_apellido}}</td>
+                        <td>{{c.segundo_apellido}}</td>
+                        <td>{{c.salario}}</td>
+                        <td>{{c.ciudad_residencia}}</td>
+                        <td>{{c.cargo}}</td>
+                        <td>{{c.clasificacion}}</td>                        
+                        <td>{{c.documento_identidad}}</td>
+                        <td style="white-space:nowrap">{{c.fecha_nacimiento | date:"d-m-Y"}}</td>
+                        <td><a href="{% url 'editarL' c.id_lider %}"><i class="fa fa-pencil-square-o fa-xl" aria-hidden="true"  style = "color: #0DCAF0;"></i></a></td>
+                        <td><a onclick="eliminar({{ c.id_lider }})" href="#"><i class="fa fa-eraser fa-xl" aria-hidden="true"  style = "color: red;"></i></a></td>
+                    </tr>
+                    {% endfor %}                    
+                 </tbody>
+            </table>
+            <hr>
+        </div>
+        {% block js %}
+          <script>            
+              function eliminar(id) {
+                  
+                swal({
+                  title: "Estas seguro de borrar el registro?",
+                  text: "Una vez eliminado, no podra recuperarse el registro!",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+                })
+                .then((willDelete) => {
+                  if (willDelete) {
+                    var url = "{% url 'deleteL' 123 %}";
+                    document.location.href = url.replace('123', id);
+                    swal("Registro eliminado exitosamente!", {
+                      icon: "success",
+                    });
+                  } else {
+                    swal("El registro no se elimino!");
+                  }
+                });
+                    
+              }
+          </script>
+        {% endblock %}
+        {% include "paginacion.html" %}
+    </div>
+</div>
+
+{% endblock %}

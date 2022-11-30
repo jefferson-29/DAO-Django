@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestion de Proyectos{% endblock %}
+
+{% block head %}
+
+{% load static %}
+
+<link rel = "stylesheet" href = "{% static 'css/stylesSave.css' %}">
+
+{% endblock %}
+
+{% block body %}
+
+<div class = "row">
+    <div class = "col-md-4 offset-md-4">
+        <form action = "/editarCompra/" method = "POST" onsubmit = "return validacionC()">
+            {% csrf_token %}
+            <center><h2> Editar Compra </h2></center>
+
+            <input type = "hidden" value = "{{ compra.id_compra }}" name = "id">
+
+            <div class = "form-group">
+                
+                <label>Cantidad:</label>
+                <input type = "number" value = "{{ compra.cantidad }}" name = "txtCantidad" id = "txtCantidad" class = "form-control form-control-sm" placeholder = "Cantidad" minlength = "1" maxlenth = "20" required>
+            
+            </div>
+
+            <div class = "form-group">
+
+                <label>Proveedor:</label>
+                <input type = "text" id = "txtProveedor" value = "{{ compra.proveedor }}" name = "txtProveedor" class = "form-control form-control-sm" placeholder = "Proveedor" minlength = "1" maxlenth = "20" required>
+            
+            </div>
+
+            <div class = "form-group">
+
+                <label>Estado de Pago:</label>
+                <select class="custom-select custom-select-sm col-sm-6" name = "pagado" id = "pagado">
+                    
+                    <option value="Si"{% if compra.cantidad == 'Si' %}selected{% endif %}>Si</option>
+                    <option value="No"{% if compra.cantidad == 'No' %}selected{% endif %}>No</option>
+                    <option value="Parcialmente"{% if compra.cantidad == 'Parcialmente' %}selected{% endif %}>Parcialmente</option>
+                  </select>
+            
+                </div>
+
+            <div class = "form-group">
+                                          
+                <label>Fecha:</label>
+                <input placeholder="Fecha de Compra" value = "{{ compra.fecha |date:'Y-m-d'}}" type = "date" id = "fechaCompra" name = "fechaCompra" class = "form-control form-control-sm" minlength = "1" maxlenth = "20" required>
+                    
+            </div>
+
+            <div class = "form-group">
+                
+                <label>Proyecto:</label>
+                <select name = "proyecto" id = "proyecto" class="custom-select custom-select-sm col-sm-6" required>
+                    
+                    {% for proyecto in proyecto %}
+                        <option value = "{{proyecto.id_proyecto}}" {% if compra.id_proyecto.id_proyecto == proyecto.id_proyecto %}selected{% endif %}>
+                            {{proyecto.id_proyecto}} {{proyecto.constructora}}</option>
+                    {% endfor %}
+
+                </select>
+                
+            </div>
+
+            <div class = "form-group">
+                
+                <label>Material:</label>
+                <select name = "construccion" id = "construccion" class="custom-select custom-select-sm col-sm-6" required>
+                    
+                    {% for material in material %}
+                        <option value = "{{material.id_materialconstruccion}}" {% if compra.id_materialconstruccion.id_materialconstruccion == material.id_materialconstruccion %}selected{%endif%}>
+                            {{material.id_materialconstruccion}} {{material.nombre_material}}</option>
+                            
+                    {% endfor %}
+                </select>    
+            </div>
+            
+            <div class = "d-flex justify-content-center" id = "botones">
+
+                <input  type = "reset" value = "Cancelar" id = "btnCancelar" class = "btn btn-secondary">
+                <input type = "submit" value = "Editar" class = "btn btn-primary">
+
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

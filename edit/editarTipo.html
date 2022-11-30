@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Edici&oacute;n de Tipo{% endblock %}
+
+{% block head %}
+
+{% load static %}
+
+<link rel = "stylesheet" href = "{% static 'css/stylesSave.css' %}">
+
+{% endblock %}
+
+{% block body %}
+
+<div class = "row">
+    <div class = "col-md-4 offset-md-4">
+        <form action = "{% url 'editarT' %}" method = "POST">
+            
+            {% csrf_token %}
+            <center><h2> Guardar Tipo </h2></center>
+
+            <input type = "hidden" value = "{{ tipo.id_tipo }}" name = "id">
+
+            <div class = "form-group">
+                <label>Codigo Tipo:</label><br>
+                <input type = "number" name = "codTipo" class = "form-control form-control-sm" value = "{{ tipo.codigo_tipo }}" minlength = "1" maxlenth = "20" required>
+            </div>
+
+            <div class = "form-group">
+                <label>Area Maxima:</label><br>
+                <input type = "number" name = "areaMax" class = "form-control form-control-sm" value = "{{ tipo.area_max }}" minlength = "1" maxlenth = "20" required>
+            </div>
+
+            <div class = "form-group">
+                <label>Financiable:</label><br>
+                <select class="custom-select custom-select-sm col-sm-6" name = "financiable">
+                    <option selected>Financiable</option>
+                    <option value="1"{% if tipo.financiable == 1 %}selected{% endif %}>1</option>
+                    <option value="0"{% if tipo.financiable == 0 %}selected{% endif %}>0</option>
+                  </select>
+            </div>
+
+            <div class = "form-group">
+                <label>Estrato:</label><br>
+                <select class="custom-select custom-select-sm col-sm-6" name = "estrato">
+                    <option selected>Estrato</option>
+                    <option value="1"{% if tipo.estrato == 1 %}selected{% endif %}>1</option>
+                    <option value="2"{% if tipo.estrato == 2 %}selected{% endif %}>2</option>
+                    <option value="3"{% if tipo.estrato == 3 %}selected{% endif %}>3</option>
+                    <option value="4"{% if tipo.estrato == 4 %}selected{% endif %}>4</option>
+                    <option value="5"{% if tipo.estrato == 5 %}selected{% endif %}>5</option>
+                    <option value="6"{% if tipo.estrato == 6 %}selected{% endif %}>6</option>
+                  </select>
+            </div>
+
+            <div class = "d-flex justify-content-center">
+                <input  type = "reset" value = "Cancelar" id = "btnCancelar" class = "btn btn-secondary">
+                <input type = "submit" value = "Guardar" class = "btn btn-primary">
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

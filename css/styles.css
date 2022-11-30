@@ -1,0 +1,17 @@
+body{
+    background: greenyellow;
+}
+
+.table-responsive{
+    height: 1000px;
+    overflow: scroll;
+}
+
+.form-date {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    }
+
+
+

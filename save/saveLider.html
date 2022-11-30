@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Guardar Lider{% endblock %}
+
+{% block head %}
+
+{% load static %}
+
+<link rel = "stylesheet" href = "{% static 'css/stylesSave.css' %}">
+
+{% endblock %}
+
+{% block body %}
+
+<div class = "card">
+    <div class = "card-body">
+        <div class = "row">
+            <script src = "{% static 'js/validaciones.js' %} "></script>
+            <!-- sweetalert -->
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+            <div class = "col-12 col-md-6 offset-md-3">
+                <form action = "{% url 'liderG' %}" method = "POST" name = "formLider">
+                    {% csrf_token %}
+                    <center><h2> Guardar Lider </h2></center>         
+                    
+                    <div class = "form-group">
+                        <input type = "text" id = "txtNombreL" name = "txtNombreL" pattern="^[A-Za-z ]+$" class = "form-control form-control-sm" placeholder = "Nombre" minlength = "1" maxlenth = "50" required />
+                    </div>
+
+                    <div class = "form-group">
+                        <input type = "text" id = "txtApellido" name = "txtApellido" pattern="^[A-Za-z ]+$" class = "form-control form-control-sm" placeholder = "Primer Apellido" minlength = "1" maxlenth = "20" required>
+                    </div>
+
+                    <div class = "form-group">
+                        <input type = "text" id = "txtSapellido" name = "txtSapellido" pattern="^[A-Za-z ]+$" class = "form-control form-control-sm" placeholder = "Segundo Apellido" minlength = "1" maxlenth = "20" required>
+                    </div>
+
+                    <div class = "form-group">
+                        <input type = "number" name = "salario" pattern="^[0-9]+" class = "form-control form-control-sm" placeholder = "Salario" minlength = "1" maxlenth = "20" required>
+                    </div>
+
+                    <div class = "form-group">
+                        
+                        <select name = "ciudad" id = "ciudad" class="custom-select custom-select-sm col-sm-6" required>
+                            <option selected>Elegir Ciudad</option>
+                            {% for ciudad in ciudad %}
+                                <option value = "{{ciudad.ciudad_residencia}}">{{ciudad.ciudad_residencia}}</option>
+                            {% endfor %}
+                        </select>     
+                                           
+                    </div>
+
+                    <div class = "form-group">
+                        <select class="custom-select custom-select-sm col-sm-6" name = "cargo" id = "cargo">
+                            <option selected>Cargo</option>
+                            <option value="Asociado">Asociado</option>
+                            <option value="Asesor">Asesor</option>
+                            <option value="Gerente">Gerente</option>
+                            <option value="Coordinador">Coordinador</option>
+                            <option value="Accionista">Accionista</option>  
+                          </select>
+                    </div>
+
+                    <div class = "form-group">
+                        <select class="custom-select custom-select-sm col-sm-6" name = "clasificacion" id = "clasificacion">
+                            <option selected>Clasificacion</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>  
+                            <option value="6">6</option>  
+                          </select>
+                    </div>
+
+                    <div class = "form-group">
+                        <input type = "text" id = "txtId" name = "txtId" class = "form-control form-control-sm" placeholder = "Identificaci&oacute;n" minlength = "1" maxlenth = "20" required>
+                    </div>
+
+                    <div class = "form-group">
+                        <input placeholder="Fecha de Nacimiento" type = "text" id = "fechaNacimiento" name = "fechaNacimiento" class = "form-control form-control-sm" onfocus="(this.type='date')" required>
+                    </div>
+                    
+                    <div class = "d-flex justify-content-center">
+                        <input  type = "reset" value = "Cancelar" id = "btnCancelar" class = "btn btn-secondary">
+                        <input type = "button" value = "Guardar" class = "btn btn-primary" onclick = "validarL('formLider')">
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

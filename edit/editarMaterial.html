@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Edici&oacute;n de Materiales de Construcci&oacute;n{% endblock %}
+
+{% block head %}
+
+{% load static %}
+
+<link rel = "stylesheet" href = "{% static 'css/stylesSave.css' %}">
+
+{% endblock %}
+
+{% block body %}
+
+<div class = "row">
+    <div class = "col-md-4 offset-md-4">
+        <form action = "{% url 'editarM' %}" method = "POST">
+            
+            {% csrf_token %}
+            <center><h2> Guardar Materiales de Construcci&oacute;n </h2></center>
+
+            <input type = "hidden" value = "{{ material.id_materialconstruccion }}" name = "id">
+
+            <div class = "form-group">
+                <label>Material:</label><br>
+                <input type = "text" id = "txtMaterial" name = "txtMaterial" class = "form-control form-control-sm" value = "{{ material.nombre_material }}" minlength = "1" maxlenth = "20" required>
+            </div>
+
+            <div class = "form-group">
+                <label>Importado:</label><br>
+                <select class="custom-select custom-select-sm col-sm-6" name = "importado" id = "importado">
+                    <option selected>Importado</option>
+                    <option value="Si" {% if material.importado == 'Si' %}selected{% endif %}>Si</option>
+                    <option value="No" {% if material.importado == 'No' %}selected{% endif %}>No</option>
+                  </select>
+            </div>
+
+            <div class = "form-group">
+                <label>Precio por Unidad:</label><br>
+                <input type = "number" name = "precioUnidad" class = "form-control form-control-sm" value = "{{material.precio_unidad}}" minlength = "1" maxlenth = "20" required>
+            </div>
+
+            <div class = "d-flex justify-content-center">
+                <input  type = "reset" value = "Cancelar" id = "btnCancelar" class = "btn btn-secondary">
+                <input type = "submit" value = "Guardar" class = "btn btn-primary">
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

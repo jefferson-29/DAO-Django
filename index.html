@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Bienvenidos{% endblock %}
+
+{% block body %}
+
+<div class = "row">
+    <div class = "col-sm-24 col-md-24 col-lg-24 col-xl-24 ">
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class = "alert alert-dismissible alert-success">
+            <button type = "button" class = "close" data-dismiss = "alert">&times;</button>
+            <strong class = "text-dark"> {{ message }} </strong>
+        </div>
+
+        {% endfor %}
+        {% endif %}
+
+        <center><h2>Bienvenidos a mi Crud Hecho en Django</h2></center>
+
+             
+    </div>
+    <div class = "col-sm-24 col-md-24 col-lg-24 col-xl-24">
+        <p>En este proyecto quiero plasmar un crud b&aacute;sico, en el cual se muestra un patr&oacute;n
+            MVC, y uso de herencia entre templates, boostrap, fontawesome. 
+            El modelo de base de datos que se us&oacute; para el desarrollo de este proyecto es el siguiente:
+        </p>
+        {% load static %}
+        <center><img src = "{% static 'images/construccion.PNG' %}" alt="My image"></center>
+
+        <p>La base de datos la puede descargar aqui</p>
+    </div>
+</div>
+
+{% endblock %}

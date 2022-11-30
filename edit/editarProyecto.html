@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Edici&oacute;n de Proyectos{% endblock %}
+
+{% block head %}
+
+{% load static %}
+
+<link rel = "stylesheet" href = "{% static 'css/stylesSave.css' %}">
+
+{% endblock %}
+
+{% block body %}
+
+<div class = "row">
+    <div class = "col-md-4 offset-md-4">
+        <form action = "{% url 'editP' %}" method = "POST">
+            
+            {% csrf_token %}
+            <center><h2> Guardar Proyecto </h2></center>
+
+            <input type = "hidden" value = "{{ proyecto.id_proyecto }}" name = "id">
+
+            <div class = "form-group">
+                <label>Fecha:</label>
+                <input placeholder="Fecha de Proyecto" value = "{{ proyecto.fecha_inicio |date:'Y-m-d'}}" type = "date" id = "fechaProyecto" name = "fechaProyecto" class = "form-control form-control-sm" minlength = "1" maxlenth = "20" required>
+            </div>
+
+            <div class = "form-group">
+                <label>Constructora:</label><br>
+                <select class="custom-select custom-select-sm col-sm-6" name = "constructora" id = "constructora">
+                    <option selected>Seleccione Constructora</option>
+                    <option value="Arquitectura S.A."{% if proyecto.constructora == 'Arquitectura S.A.' %}selected{% endif %}>Arquitectura S.A.</option>
+                    <option value="Pegaso"{% if proyecto.constructora == 'Pegaso' %}selected{% endif %}>Pegaso</option>
+                    <option value="Hermanos Gallego"{% if proyecto.constructora == 'Hermanos Gallego' %}selected{% endif %}>Hermanos Gallego</option>
+                    <option value="Ingenieros Ltda."{% if proyecto.constructora == 'Ingenieros Ltda.' %}selected{% endif %}>Ingenieros Ltda.</option>
+                    <option value="Edificios y Edificios"{% if proyecto.constructora == 'Edificios y Edificios' %}selected{% endif %}>Edificios y Edificios</option>  
+                  </select>
+            </div>
+            
+            <div class = "form-group">
+                <label>Numero de Baños:</label>
+                <input type = "number" value = "{{ proyecto.numero_banos|add:"0" }}" step = "any" name = "numBanos" class = "form-control form-control-sm" required>
+            </div>
+            <div class = "form-group">
+                <label>Numero de Habitaciones:</label>
+                <input type = "number" value = "{{ proyecto.numero_habitaciones|add:"0" }}" name = "numHabitaciones" class = "form-control form-control-sm" required>
+            </div>
+
+            <div class = "form-group">
+                <label>Banco Vinculado:</label><br>
+                <select class="custom-select custom-select-sm col-sm-6" name = "banco" id = "banco">
+                    <option selected>Seleccione Banco</option>
+                    <option value="Conavi"{% if proyecto.banco_vinculado == 'Conavi' %}selected{% endif %}>Conavi</option>
+                    <option value="Davivienda"{% if proyecto.banco_vinculado == 'Davivienda' %}selected{% endif %}>Davivienda</option>
+                    <option value="Bancolombia"{% if proyecto.banco_vinculado == 'Bancolombia' %}selected{% endif %}>Bancolombia</option>
+                    <option value="Colpatria"{% if proyecto.banco_vinculado == 'Colpatria' %}selected{% endif %}>Colpatria</option>
+                    <option value="Colmena"{% if proyecto.banco_vinculado == 'Colmena' %}selected{% endif %}>Colmena</option>
+                    <option value="Banco de Occidente"{% if proyecto.banco_vinculado == 'Banco de Occidente' %}selected{% endif %}>Banco de Occidente</option>
+                  </select>
+            </div>
+
+            <div class = "form-group">
+                <label>Porcentaje de Cuota Inicial:</label>
+                <input type = "number" name = "numPorcentaje" class = "form-control form-control-sm" value = "{{proyecto.porcentaje_cuota_inicial|floatformat:"1u"}}" step="0.01" minlength = "1" maxlenth = "20" required>
+            </div>
+            
+            <div class = "form-group">
+                <label>Ciudad:</label><br>
+                <select name = "ciudad" id = "ciudad" class="custom-select custom-select-sm col-sm-6" required>
+                        <option selected>Seleccione ciudad</option>
+                    {% for proyec in proyec %}
+                        <option value = "{{proyec.ciudad}}" {% if proyecto.ciudad == proyec.ciudad %}selected{% endif %}>{{proyec.ciudad}}</option>
+                    {% endfor %}
+                </select>     
+                                   
+            </div>
+
+            <div class = "form-group">
+                <label>Clasificaci&oacute;n:</label><br>
+                <select class="custom-select custom-select-sm col-sm-6" name = "clasificacion" id = "clasificacion">
+                    <option selected>Seleccione Clasificaci&oacute;n</option>
+                    <option value="Casa Campestre" {% if proyecto.clasificacion == 'Casa Campestre' %}selected{% endif %}>Casa Campestre</option>
+                    <option value="Casa" {% if proyecto.clasificacion == 'Casa' %}selected{% endif %}>Casa</option>
+                    <option value="Condominio" {% if proyecto.clasificacion == 'Condominio' %}selected{% endif %}>Condominio</option>
+                    <option value="Apartamento" {% if proyecto.clasificacion == 'Apartamento' %}selected{% endif %}>Apartamento</option>
+                    <option value="Apartaestudio" {% if proyecto.clasificacion == 'Apartaestudio' %}selected{% endif %}>Apartaestudio</option>
+                  </select>
+            </div>
+
+            <div class = "form-group">
+                <label>Acabados:</label><br>
+                <select class="custom-select custom-select-sm col-sm-6" name = "acabado" id = "acabado">
+                    <option selected>Seleccione Acabado</option>
+                    <option value="Si" {% if proyecto.acabados == 'Si' %}selected{% endif %}>Si</option>
+                    <option value="No" {% if proyecto.acabados == 'No' %}selected{% endif %}>No</option>
+                  </select>
+            </div>
+
+            <div class = "form-group">
+                <label>Serial:</label><br>
+                <input type = "text" id = "txtSerial" name = "txtSerial" class = "form-control form-control-sm" value = "{{proyecto.serial}}" minlength = "1" maxlenth = "20" required>
+            </div>
+
+            <div class = "form-group">
+                <label>Tipo:</label><br>
+                <select name = "tipo" id = "tipo" class="custom-select custom-select-sm col-sm-6" required>
+                    <option selected>Seleccione Tipo</option>
+                    {% for tipo in tipo %}
+                        <option value = "{{tipo.id_tipo}}" {% if proyecto.id_tipo.id_tipo == tipo.id_tipo %}selected{% endif %}>{{tipo.id_tipo}}</option>
+                    {% endfor %}
+                </select>
+                
+            </div>
+
+            <div class = "form-group">
+                <label>Lider:</label><br>
+                <select name = "lider" id = "lider" class="custom-select custom-select-sm col-sm-6" required>
+                    <option selected>Seleccione Lider</option>
+                    {% for lider in lider %}
+                        <option value = "{{lider.id_lider}}" {% if proyecto.id_lider.id_lider == lider.id_lider %}selected {% endif %}>{{lider.nombre}} {{lider.primer_apellido}} {{lider.segundo_apellido}}</option>
+                    {% endfor %}
+                </select>     
+                                   
+            </div>
+
+            <div class = "d-flex justify-content-center">
+                <input  type = "reset" value = "Cancelar" id = "btnCancelar" class = "btn btn-secondary">
+                <input type = "submit" value = "Guardar" class = "btn btn-primary">
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

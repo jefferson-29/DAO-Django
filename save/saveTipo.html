@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Guardar Tipo{% endblock %}
+
+{% block head %}
+
+{% load static %}
+
+<link rel = "stylesheet" href = "{% static 'css/stylesSave.css' %}">
+
+{% endblock %}
+
+{% block body %}
+
+<div class = "card">
+    <div class = "card-body">
+        <div class = "row">
+            <div class = "col-12 col-md-6 offset-md-3">
+                <form action = "{% url 'saveG' %}" method = "POST">
+                    {% csrf_token %}
+                    <center><h2> Guardar Tipo </h2></center>         
+                    
+                    <div class = "form-group">
+                        <input type = "number" name = "codTipo" class = "form-control form-control-sm" placeholder = "Codigo Tipo" minlength = "1" maxlenth = "20" required>
+                    </div>
+
+                    <div class = "form-group">
+                        <input type = "number" name = "areaMax" class = "form-control form-control-sm" placeholder = "Area Maxima" minlength = "1" maxlenth = "20" required>
+                    </div>
+
+                    <div class = "form-group">
+                        <select class="custom-select custom-select-sm col-sm-6" name = "financiable">
+                            <option selected>Financiable</option>
+                            <option value="1">1</option>
+                            <option value="0">0</option>
+                          </select>
+                    </div>
+
+                    <div class = "form-group">
+                        <select class="custom-select custom-select-sm col-sm-6" name = "estrato">
+                            <option selected>Estrato</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                          </select>
+                    </div>
+
+                    <div class = "d-flex justify-content-center">
+                        <input  type = "reset" value = "Cancelar" id = "btnCancelar" class = "btn btn-secondary">
+                        <input type = "submit" value = "Guardar" class = "btn btn-primary">
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}
